@@ -5,14 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle del producto | Mueblería Hermanos Jota</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/producto.css" />
   </head>
   <body>
     <div id="header-placeholder"></div>
 
-    <main></main>
+    <main>
+      <article class="producto-detalle" id="producto-detalle">
+        <figure class="producto-detalle__media">
+          <img
+            id="producto-imagen"
+            src="https://placehold.co/800x600"
+            alt="Imagen del producto"
+          />
+        </figure>
+
+        <div class="producto-detalle__info">
+          <h1 class="producto-detalle__nombre" id="producto-nombre">Nombre del producto</h1>
+          <p class="producto-detalle__descripcion" id="producto-descripcion">
+            Descripción del producto.
+          </p>
+          <p class="producto-detalle__precio" id="producto-precio">$0</p>
+
+          <div class="producto-detalle__acciones">
+            <div class="producto-detalle__cantidad">
+              <label for="producto-cantidad">Cantidad</label>
+              <input
+                type="number"
+                id="producto-cantidad"
+                name="cantidad"
+                min="1"
+                value="1"
+              />
+            </div>
+            <button type="button" class="producto-detalle__btn" id="btn-anadir-carrito">
+              Añadir al carrito
+            </button>
+          </div>
+        </div>
+      </article>
+    </main>
 
     <div id="footer-placeholder"></div>
 
     <script src="scripts/layout.js"></script>
+    <script>
+      if (typeof cargarLayout === "function") {
+        cargarLayout();
+      }
+    </script>
   </body>
 </html>
