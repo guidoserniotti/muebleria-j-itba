@@ -1,0 +1,62 @@
+/* Reseteo universal */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* height: 100vh -> el banner ocupa el 100% del alto de la ventana */
+.hero-banner {
+  height: 100vh;
+  background-color: #3b2a1d;
+  background-image: linear-gradient(rgba(59, 42, 29, 0.65), rgba(59, 42, 29, 0.65)),
+    url("../../../../img/products/sofa-patagonia.png");
+  background-size: cover;
+  background-position: center;
+
+  /* Centrado perfecto con Flexbox */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-banner h1 {
+  color: #ffffff;
+  font-size: 64px;
+  max-width: 15ch;
+  margin-bottom: 20px;
+}
+
+.hero-banner p {
+  color: #e8ddd0;
+  font-size: 22px;
+}
+
+.contenido {
+  padding: 60px 20px;
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.contenido h2 {
+  margin-bottom: 15px;
+}
+
+/* En pantallas chicas el título se achica para que no se desproporcione */
+@media (max-width: 600px) {
+  .hero-banner h1 {
+    font-size: 34px;
+  }
+
+  .hero-banner p {
+    font-size: 17px;
+  }
+}

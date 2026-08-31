@@ -1,0 +1,20 @@
+p {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+#titulo-principal {
+  text-align: center;
+  color: #7b3f00;
+}
+
+.subtitulo {
+  color: #2f6f4e;
+  font-weight: bold;
+}
+
+ul a {
+  text-decoration: none;
+}

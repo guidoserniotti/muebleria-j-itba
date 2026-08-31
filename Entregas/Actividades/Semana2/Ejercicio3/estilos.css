@@ -1,0 +1,29 @@
+/* Regla universal: el padding y el border se cuentan dentro del width */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+}
+
+/* Flexbox: las tarjetas se acomodan una al lado de la otra */
+.galeria {
+  display: flex;
+  gap: 20px;
+}
+
+/* Ancho en porcentaje: el layout se adapta al tamaño del contenedor */
+.tarjeta-foto {
+  width: 30%;
+  padding: 15px;
+  border: 1px solid #cccccc;
+  box-shadow: 5px 5px 10px #e0e0e0;
+}
+
+/* Las imágenes nunca se desbordan de su tarjeta */
+.tarjeta-foto img {
+  width: 100%;
+  height: auto;
+}
