@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscripción al Evento</title>
+  </head>
+  <body>
+    <h1>Inscripción - Jornadas de Diseño y Carpintería 2026</h1>
+
+    <form action="#" method="post">
+      <p>
+        <label for="nombre">Nombre Completo:</label>
+        <input type="text" id="nombre" name="nombre" required />
+      </p>
+
+      <p>
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" name="email" required />
+      </p>
+
+      <p>
+        <label for="password">Crear Contraseña:</label>
+        <input type="password" id="password" name="password" required />
+      </p>
+
+      <p>
+        <label for="taller">Taller de Interés:</label>
+        <select id="taller" name="taller">
+          <option value="restauracion">Restauración de muebles antiguos</option>
+          <option value="tapiceria">Tapicería y retapizado</option>
+          <option value="maderas">Selección y tratamiento de maderas</option>
+          <option value="diseno">
+            Diseño de interiores para espacios chicos
+          </option>
+        </select>
+      </p>
+
+      <fieldset>
+        <legend>Tipo de Asistencia:</legend>
+
+        <input
+          type="radio"
+          id="presencial"
+          name="asistencia"
+          value="presencial"
+          checked
+        />
+        <label for="presencial">Presencial</label>
+
+        <input type="radio" id="virtual" name="asistencia" value="virtual" />
+        <label for="virtual">Virtual</label>
+      </fieldset>
+
+      <p>
+        <input type="checkbox" id="terminos" name="terminos" required />
+        <label for="terminos">Acepto los términos y condiciones</label>
+      </p>
+
+      <p>
+        <label for="comentarios">Comentarios adicionales:</label>
+        <br />
+        <textarea
+          id="comentarios"
+          name="comentarios"
+          rows="5"
+          cols="40"
+        ></textarea>
+      </p>
+
+      <button type="submit">Inscribirme</button>
+    </form>
+  </body>
+</html>

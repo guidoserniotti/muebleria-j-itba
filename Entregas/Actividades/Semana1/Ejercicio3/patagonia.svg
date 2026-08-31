@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340" role="img" aria-label="Paisaje de montañas patagónicas con un lago">
+  <rect width="600" height="340" fill="#bcd8e6"/>
+  <circle cx="480" cy="70" r="34" fill="#f6e3a1"/>
+  <path d="M0 230 L130 90 L235 230 Z" fill="#6b7f8c"/>
+  <path d="M130 90 L172 146 L88 146 Z" fill="#ffffff"/>
+  <path d="M180 230 L330 60 L480 230 Z" fill="#55697a"/>
+  <path d="M330 60 L385 132 L275 132 Z" fill="#ffffff"/>
+  <path d="M400 230 L520 120 L600 230 Z" fill="#6b7f8c"/>
+  <rect y="230" width="600" height="110" fill="#3f7c99"/>
+  <path d="M0 250 h600 v6 H0 z" fill="#5b95ad" opacity=".6"/>
+</svg>
