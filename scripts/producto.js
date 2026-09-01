@@ -37,6 +37,7 @@ async function renderizarProducto() {
       .addEventListener("click", () => {
         const cantidad = document.getElementById("producto-cantidad").value;
         agregarAlCarrito(idProducto, cantidad);
+        actualizarContadorHeader();
       });
   } catch (error) {
     console.error("Error al cargar el producto:", error);
