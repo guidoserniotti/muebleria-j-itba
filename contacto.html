@@ -39,9 +39,10 @@
   <div id="footer"></div>
   <script src="scripts/layout.js"></script>
   <script src="scripts/contacto.js"></script>
-  
+  <script src="scripts/carrito.js"></script>
+
   <script>
-    loadLayout();
+    cargarLayout().then(() => actualizarContadorHeader());
   </script>
 </body>
 </html>
