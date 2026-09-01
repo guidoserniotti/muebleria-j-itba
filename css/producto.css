@@ -73,6 +73,12 @@
   cursor: pointer;
 }
 
+.producto-detalle__feedback {
+  margin: 0.75rem 0 0;
+  color: #28613b;
+  font-weight: 600;
+}
+
 @media (min-width: 768px) {
   .producto-detalle {
     flex-direction: row;

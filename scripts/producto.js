@@ -38,6 +38,10 @@ async function renderizarProducto() {
         const cantidad = document.getElementById("producto-cantidad").value;
         agregarAlCarrito(idProducto, cantidad);
         actualizarContadorHeader();
+
+        const feedback = document.getElementById("producto-feedback");
+        feedback.textContent = "Producto agregado al carrito.";
+        feedback.hidden = false;
       });
   } catch (error) {
     console.error("Error al cargar el producto:", error);
