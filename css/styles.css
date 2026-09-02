@@ -55,7 +55,7 @@ h1, h2, h3 {
 
 /* ===================================
    LEYENDAS (textos secundarios pequeños)
-   Inter Light, 9pt, espaciado 0.02em según el manual
+   Inter Light, 9pt, espaciado 0.02em según el manual de hermanos J
    =================================== */
 .leyenda {
   font-family: var(--font-main);
