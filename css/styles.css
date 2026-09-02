@@ -30,6 +30,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Ninguna imagen puede desbordar su contenedor */
+img {
+  max-width: 100%;
+}
 /* ===================================
    ESTILOS BASE DEL BODY
    Tipografía, color de texto y fondo general del sitio
@@ -51,6 +56,23 @@ h1, h2, h3 {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  /* Los nombres largos en mayuscula y con tracking desbordan
+     en pantallas angostas si no se permite el corte */
+  overflow-wrap: break-word;
+}
+
+/* Tamanos fluidos: escalan con el viewport entre un minimo
+   legible en mobile y un maximo en desktop */
+h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.35rem, 4vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
 }
 
 /* ===================================
@@ -68,27 +90,61 @@ h1, h2, h3 {
    HEADER
    Logo, navegación y carrito distribuidos con Flexbox
    =================================== */
+/* Mobile: el logo y el carrito comparten la primera fila y la
+   navegacion baja completa debajo. A partir de 768px las tres
+   zonas entran en una sola fila. */
 header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-md);     
-    background-color: var(--color-primary); 
+    gap: var(--spacing-sm) var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-primary);
 }
+
+header nav {
+    order: 3;
+    flex-basis: 100%;
+}
+
 header nav ul {
     list-style: none;
     display: flex;
-    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm) var(--spacing-md);
 }
+
 header nav a {
     color: var(--color-background);
     text-decoration: none;
     font-weight: bold;
-}   
+    /* Area de toque comoda en pantallas tactiles */
+    display: inline-block;
+    padding: var(--spacing-sm) 0;
+}
+
 .cart-container {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+}
+
+.cart-container a {
+  color: var(--color-background);
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    header nav {
+        order: 0;
+        flex-basis: auto;
+    }
+
+    header nav a {
+        padding: 0;
+    }
 }
 
 footer {
@@ -101,26 +157,31 @@ footer {
     text-align: center; 
 }   
 
-.hero { 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  min-height: 400px; }
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Alto proporcional al viewport, acotado arriba y abajo */
+  min-height: clamp(280px, 45vh, 420px);
+  padding: var(--spacing-lg) var(--spacing-md);
+}
 
 .hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: var(--spacing-sm);
     text-align: center;
+    max-width: 40ch;
 }
 
 .destacados {
-    padding: 40px 20px;
+    padding: var(--spacing-lg) var(--spacing-md);
 }
 
 .destacados h2 {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: var(--spacing-lg);
 }
 
 #destacados-container {
@@ -132,8 +193,13 @@ footer {
     gap: 20px;
 }
 
+/* Mobile-first: la tarjeta ocupa el ancho disponible con un tope
+   para que no se estire de mas. El ancho fijo se aplica recien en
+   desktop, y solo en la fila de destacados. */
 .tarjeta-producto {
-    width: 280px;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -155,7 +221,10 @@ footer {
 
 .tarjeta-producto img {
     width: 100%;
-    height: 200px;
+    /* Proporcion constante en vez de alto fijo, para que la imagen
+       acompane el ancho de la tarjeta en cualquier pantalla */
+    aspect-ratio: 4 / 3;
+    height: auto;
 
     object-fit: cover;
     display: block;
@@ -195,13 +264,12 @@ footer p {
     text-align: center;
 }
 
-@media (max-width: 600px) {
-
-    .tarjeta-producto {
-        width: 100%;
-        max-width: 350px;
+@media (min-width: 768px) {
+    /* En la fila de destacados las tarjetas vuelven a ancho fijo
+       para que queden parejas entre si */
+    #destacados-container .tarjeta-producto {
+        width: 280px;
     }
-
 }
 /* ===================================
    CATÁLOGO (productos.html)
@@ -255,6 +323,12 @@ footer p {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: var(--spacing-lg);
+  }
+
+  /* En la grilla la tarjeta llena su celda: el tope de ancho
+     lo define la columna, no la tarjeta */
+  .grilla-productos .tarjeta-producto {
+    max-width: none;
   }
 }
 
@@ -338,4 +412,34 @@ footer p {
 #mensaje-exito {
   padding: var(--spacing-sm) 0;
   font-weight: 600;
+}
+
+/* ===================================
+   LOGO DEL HEADER
+   El SVG es monocromo en --color-primary, el mismo
+   color de fondo del header: se invierte a blanco
+   con un filtro para que contraste.
+   =================================== */
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo img {
+  width: clamp(32px, 8vw, 40px);
+  height: clamp(32px, 8vw, 40px);
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+
+.logo span {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
