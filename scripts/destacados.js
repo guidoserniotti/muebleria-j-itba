@@ -18,23 +18,26 @@ async function cargarDestacados() {
 
             tarjeta.classList.add("tarjeta-producto");
 
+        // enlace hacia la pag de detalle del producto
+        // se envolvio cada tarjeta <article> dentro de un <a>
             tarjeta.innerHTML = `
-                <img 
-                    src="${producto.imagen}" 
-                    alt="${producto.nombre}"
-                >
+                <a href="producto.html?id=${producto.id}">
+                    <img
+                        src="${producto.imagen}"
+                        alt="${producto.nombre}"
+                    >
+                    <div class="tarjeta-info">
+                        <h3>${producto.nombre}</h3>
 
-                <div class="tarjeta-info">
-                    <h3>${producto.nombre}</h3>
+                        <p class="precio">
+                            $${producto.precio.toLocaleString("es-AR")}
+                        </p>
 
-                    <p class="precio">
-                        $${producto.precio.toLocaleString("es-AR")}
-                    </p>
-
-                    <p class="descripcion">
-                        ${producto.descripcion}
-                    </p>
-                </div>
+                        <p class="descripcion">
+                            ${producto.descripcion}
+                        </p>
+                    </div>
+                </a>
             `;
 
             contenedor.appendChild(tarjeta);
