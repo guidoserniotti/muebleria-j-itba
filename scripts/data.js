@@ -49,7 +49,7 @@ const CATALOGO = [
     descripcion:
       "Mesa de centro con sobre circular de mármol Patagonia y base de tres patas en madera de nogal. Su diseño minimalista se convierte en el punto focal perfecto para cualquier sala de estar contemporánea, combinando la frialdad del mármol con la calidez de la madera.",
     stock: 5,
-    destacado: true,
+    destacado: false,
   },
   {
     id: 5,

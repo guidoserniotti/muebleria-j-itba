@@ -339,3 +339,31 @@ footer p {
   padding: var(--spacing-sm) 0;
   font-weight: 600;
 }
+
+/* ===================================
+   LOGO DEL HEADER
+   El SVG es monocromo en --color-primary, el mismo
+   color de fondo del header: se invierte a blanco
+   con un filtro para que contraste.
+   =================================== */
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  filter: brightness(0) invert(1);
+}
+
+.logo span {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
