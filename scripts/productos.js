@@ -42,3 +42,17 @@ function mostrarTarjetas(productos) {
 }
 
 document.addEventListener('DOMContentLoaded', renderizarCatalogo);
+
+const inputBusqueda = document.getElementById('input-busqueda');
+
+if (inputBusqueda) {
+  inputBusqueda.addEventListener('input', (e) => {
+    const texto = e.target.value.toLowerCase().trim();
+
+    const filtrados = listaProductosGlobal.filter(producto =>
+      producto.nombre.toLowerCase().includes(texto)
+    );
+
+    mostrarTarjetas(filtrados);
+  });
+}
