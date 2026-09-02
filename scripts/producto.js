@@ -24,7 +24,7 @@ async function renderizarProducto() {
     document.getElementById("producto-descripcion").textContent =
       producto.descripcion;
     document.getElementById("producto-precio").textContent =
-      `$${producto.precio}`;
+      `$${producto.precio.toLocaleString("es-AR")}`;
     document.getElementById("producto-imagen").src = producto.imagen;
     document.getElementById("producto-imagen").alt = producto.nombre;
 
@@ -35,7 +35,9 @@ async function renderizarProducto() {
     document
       .getElementById("btn-anadir-carrito")
       .addEventListener("click", () => {
-        const cantidad = document.getElementById("producto-cantidad").value;
+        const cantidad = Number(
+          document.getElementById("producto-cantidad").value
+        );
         agregarAlCarrito(idProducto, cantidad);
         actualizarContadorHeader();
 

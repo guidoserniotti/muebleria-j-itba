@@ -4,11 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalle del producto | Mueblería Hermanos Jota</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap">
+  <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/producto.css" />
   </head>
   <body>
-    <div id="header-placeholder"></div>
+    <div id="header"></div>
 
     <main>
       <article class="producto-detalle" id="producto-detalle">
@@ -59,16 +62,14 @@
       </article>
     </main>
 
-    <div id="footer-placeholder"></div>
+    <div id="footer"></div>
 
     <script src="scripts/layout.js"></script>
     <script src="scripts/data.js"></script>
     <script src="scripts/carrito.js"></script>
     <script src="scripts/producto.js"></script>
     <script>
-      if (typeof cargarLayout === "function") {
-        cargarLayout();
-      }
+      cargarLayout().then(() => actualizarContadorHeader());
     </script>
   </body>
 </html>

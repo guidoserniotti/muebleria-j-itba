@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Muebleria Hermanos Jota</title>
+  <title>Catálogo - Mueblería Hermanos Jota</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap">
@@ -12,34 +12,29 @@
 
 <body>
   <div id="header"></div>
-  <main>
-    <section class="hero">
-      <div class="hero-content">
-        <h2>Muebles que hacen hogar</h2>
-        <p>Diseño, calidad y comodidad para cada espacio</p>
-        <a href="#destacados-container">Ver productos</a>
-      </div>
-    </section> 
-    
-    <section class="destacados">
-      <h2>Productos destacados</h2>
-      <div id="destacados-container"></div>
-    </section>
 
+  <main>
+    <section class="catalogo">
+      <h2>Catálogo de productos</h2>
+
+      <div class="buscador-container">
+        <label for="input-busqueda" class="leyenda">Buscar productos</label>
+        <input type="search" id="input-busqueda" placeholder="Buscar muebles...">
+      </div>
+
+      <div id="catalogo-container" class="grilla-productos"></div>
+    </section>
   </main>
 
   <div id="footer"></div>
 
   <script src="scripts/layout.js"></script>
   <script src="scripts/data.js"></script>
-  <script src="scripts/destacados.js"></script>
   <script src="scripts/carrito.js"></script>
+  <script src="scripts/productos.js"></script>
 
   <script>
     cargarLayout().then(() => actualizarContadorHeader());
   </script>
-
 </body>
 </html>
-
-  

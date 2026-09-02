@@ -41,13 +41,14 @@ function guardarCarrito(carrito) {
  */
 function agregarAlCarrito(idProducto, cantidad = 1) {
   const id = Number(idProducto);
+  const cant = Math.max(1, Math.trunc(Number(cantidad)) || 1);
   const carrito = obtenerCarrito();
   const item = carrito.find((i) => i.id === id);
 
   if (item) {
-    item.cantidad += cantidad;
+    item.cantidad += cant;
   } else {
-    carrito.push({ id, cantidad });
+    carrito.push({ id, cantidad: cant });
   }
 
   guardarCarrito(carrito);
@@ -59,7 +60,7 @@ function agregarAlCarrito(idProducto, cantidad = 1) {
  */
 function obtenerCantidadTotalCarrito() {
   const carrito = obtenerCarrito();
-  return carrito.reduce((total, item) => total + item.cantidad, 0);
+  return carrito.reduce((total, item) => total + Number(item.cantidad || 0), 0);
 }
 
 /**
