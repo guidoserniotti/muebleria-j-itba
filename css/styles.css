@@ -1,0 +1,445 @@
+/* ===================================
+   VARIABLES GLOBALES (Custom Properties)
+   Colores, tipografía y espaciados reutilizables
+   en todo el sitio
+   =================================== */
+:root {
+--color-primary: #A0522D;
+--color-secondary: #c17a56;
+--color-accent-green: #87A96B; 
+--color-accent-gold: #D4A437;  
+--color-cream: #F5E6D3; 
+
+--color-text: #2b2b2b;
+--color-background: #ffffff;
+
+--font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+--font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; /* Cuerpo de texto */
+--spacing-sm: 8px;
+--spacing-md: 16px;
+--spacing-lg: 32px;
+}
+/* ===================================
+   RESET
+   Elimina márgenes/paddings por defecto del navegador
+   y unifica el modelo de caja para todos los elementos
+   =================================== */
+
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Ninguna imagen puede desbordar su contenedor */
+img {
+  max-width: 100%;
+}
+/* ===================================
+   ESTILOS BASE DEL BODY
+   Tipografía, color de texto y fondo general del sitio
+   =================================== */
+body {
+    font-family: var(--font-main);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    line-height: 1.6;
+}
+
+/* ===================================
+   TÍTULOS
+   Según el manual: Playfair Display, mayúsculas,
+   espaciado de letras 0.1em para títulos principales
+   =================================== */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* Los nombres largos en mayuscula y con tracking desbordan
+     en pantallas angostas si no se permite el corte */
+  overflow-wrap: break-word;
+}
+
+/* Tamanos fluidos: escalan con el viewport entre un minimo
+   legible en mobile y un maximo en desktop */
+h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.35rem, 4vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+}
+
+/* ===================================
+   LEYENDAS (textos secundarios pequeños)
+   Inter Light, 9pt, espaciado 0.02em según el manual de hermanos J
+   =================================== */
+.leyenda {
+  font-family: var(--font-main);
+  font-weight: 300;
+  font-size: 9pt;
+  letter-spacing: 0.02em;
+}
+
+/* ===================================
+   HEADER
+   Logo, navegación y carrito distribuidos con Flexbox
+   =================================== */
+/* Mobile: el logo y el carrito comparten la primera fila y la
+   navegacion baja completa debajo. A partir de 768px las tres
+   zonas entran en una sola fila. */
+header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-sm) var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-primary);
+}
+
+header nav {
+    order: 3;
+    flex-basis: 100%;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm) var(--spacing-md);
+}
+
+header nav a {
+    color: var(--color-background);
+    text-decoration: none;
+    font-weight: bold;
+    /* Area de toque comoda en pantallas tactiles */
+    display: inline-block;
+    padding: var(--spacing-sm) 0;
+}
+
+.cart-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.cart-container a {
+  color: var(--color-background);
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    header nav {
+        order: 0;
+        flex-basis: auto;
+    }
+
+    header nav a {
+        padding: 0;
+    }
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm); 
+    padding: var(--spacing-md); 
+    background-color: var(--color-secondary);
+    text-align: center; 
+}   
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Alto proporcional al viewport, acotado arriba y abajo */
+  min-height: clamp(280px, 45vh, 420px);
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-align: center;
+    max-width: 40ch;
+}
+
+.destacados {
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.destacados h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+#destacados-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 20px;
+}
+
+/* Mobile-first: la tarjeta ocupa el ancho disponible con un tope
+   para que no se estire de mas. El ancho fijo se aplica recien en
+   desktop, y solo en la fila de destacados. */
+.tarjeta-producto {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    display: flex;
+    flex-direction: column;
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.tarjeta-producto:hover {
+    transform: translateY(-5px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.tarjeta-producto img {
+    width: 100%;
+    /* Proporcion constante en vez de alto fijo, para que la imagen
+       acompane el ancho de la tarjeta en cualquier pantalla */
+    aspect-ratio: 4 / 3;
+    height: auto;
+
+    object-fit: cover;
+    display: block;
+}
+
+.tarjeta-info {
+    padding: 20px;
+}
+
+.tarjeta-info h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+}
+
+.tarjeta-producto a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.precio {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 10px;
+}
+
+.descripcion {
+    margin: 0;
+    line-height: 1.5;
+}
+
+header h1 {
+    text-align: center;
+}
+
+footer p {
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    /* En la fila de destacados las tarjetas vuelven a ancho fijo
+       para que queden parejas entre si */
+    #destacados-container .tarjeta-producto {
+        width: 280px;
+    }
+}
+/* ===================================
+   CATÁLOGO (productos.html)
+   Grilla responsive y buscador.
+   Las tarjetas reutilizan .tarjeta-producto,
+   definida más arriba: no se redefine acá.
+   =================================== */
+.catalogo {
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.catalogo h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.buscador-container {
+  margin: 0 auto var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+#input-busqueda {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px var(--spacing-md);
+  border: 1px solid var(--color-secondary);
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  outline: none;
+}
+
+#input-busqueda:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(160, 82, 45, 0.15);
+}
+
+.grilla-productos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .grilla-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  /* En la grilla la tarjeta llena su celda: el tope de ancho
+     lo define la columna, no la tarjeta */
+  .grilla-productos .tarjeta-producto {
+    max-width: none;
+  }
+}
+
+.sin-resultados {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+/* ===================================
+   CONTACTO
+   Formulario centrado con ancho acotado
+   =================================== */
+.contacto {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.contacto h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+#contact-form label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+}
+
+#contact-form input,
+#contact-form textarea {
+  width: 100%;
+  padding: 12px var(--spacing-md);
+  border: 1px solid var(--color-secondary);
+  border-radius: 6px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  outline: none;
+}
+
+#contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(160, 82, 45, 0.15);
+}
+
+#contact-form button {
+  align-self: flex-start;
+  padding: 12px var(--spacing-lg);
+  border: none;
+  border-radius: 6px;
+  background-color: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#contact-form button:hover {
+  background-color: var(--color-secondary);
+}
+
+#mensaje-exito:empty {
+  display: none;
+}
+
+#mensaje-exito {
+  padding: var(--spacing-sm) 0;
+  font-weight: 600;
+}
+
+/* ===================================
+   LOGO DEL HEADER
+   El SVG es monocromo en --color-primary, el mismo
+   color de fondo del header: se invierte a blanco
+   con un filtro para que contraste.
+   =================================== */
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo img {
+  width: clamp(32px, 8vw, 40px);
+  height: clamp(32px, 8vw, 40px);
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+
+.logo span {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
