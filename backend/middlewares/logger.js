@@ -1,5 +1,6 @@
 const logger = (req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
+    const fecha = new Date().toLocaleString('es-AR').replace(',', '');
+    console.log(`[${fecha}] ${req.method} ${req.originalUrl}`);
     next();
 };
 
