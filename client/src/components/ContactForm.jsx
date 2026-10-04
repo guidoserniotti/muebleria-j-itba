@@ -47,7 +47,7 @@ function ContactForm() {
     return (
       <div className="contact-form">
         <h2>Contacto</h2>
-        <p className="contact-form__success">
+        <p className="contact-form__success" role="alert">
           Mensaje enviado. Te contactamos a la brevedad.
         </p>
         <button type="button" onClick={handleEnviarOtro}>
@@ -69,9 +69,13 @@ function ContactForm() {
           type="text"
           value={form.nombre}
           onChange={handleChange}
+          aria-invalid={errores.nombre ? 'true' : 'false'}
+          aria-describedby={errores.nombre ? 'error-nombre' : undefined}
         />
         {errores.nombre && (
-          <p className="contact-form__error">{errores.nombre}</p>
+          <p id="error-nombre" className="contact-form__error" role="alert">
+            {errores.nombre}
+          </p>
         )}
       </div>
 
@@ -83,9 +87,13 @@ function ContactForm() {
           type="email"
           value={form.email}
           onChange={handleChange}
+          aria-invalid={errores.email ? 'true' : 'false'}
+          aria-describedby={errores.email ? 'error-email' : undefined}
         />
         {errores.email && (
-          <p className="contact-form__error">{errores.email}</p>
+          <p id="error-email" className="contact-form__error" role="alert">
+            {errores.email}
+          </p>
         )}
       </div>
 
@@ -96,9 +104,13 @@ function ContactForm() {
           name="mensaje"
           value={form.mensaje}
           onChange={handleChange}
+          aria-invalid={errores.mensaje ? 'true' : 'false'}
+          aria-describedby={errores.mensaje ? 'error-mensaje' : undefined}
         />
         {errores.mensaje && (
-          <p className="contact-form__error">{errores.mensaje}</p>
+          <p id="error-mensaje" className="contact-form__error" role="alert">
+            {errores.mensaje}
+          </p>
         )}
       </div>
 
