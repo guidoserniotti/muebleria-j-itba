@@ -4,6 +4,7 @@ import './ContactForm.css';
 function ContactForm() {
   const [form, setForm] = useState({ nombre: '', email: '', mensaje: '' });
   const [errores, setErrores] = useState({});
+  const [enviado, setEnviado] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +32,30 @@ function ContactForm() {
     }
 
     setErrores(nuevosErrores);
+
+    if (Object.keys(nuevosErrores).length === 0) {
+      setEnviado(true);
+      setForm({ nombre: '', email: '', mensaje: '' });
+    }
   };
+
+  const handleEnviarOtro = () => {
+    setEnviado(false);
+  };
+
+  if (enviado) {
+    return (
+      <div className="contact-form">
+        <h2>Contacto</h2>
+        <p className="contact-form__success">
+          Mensaje enviado. Te contactamos a la brevedad.
+        </p>
+        <button type="button" onClick={handleEnviarOtro}>
+          Enviar otro mensaje
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form className="contact-form" onSubmit={handleSubmit}>

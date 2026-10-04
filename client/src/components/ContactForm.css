@@ -47,3 +47,9 @@
   color: #b00020;
   font-size: 0.85rem;
 }
+
+.contact-form__success {
+  margin: 0;
+  color: #2e7d32;
+  font-weight: 600;
+}
