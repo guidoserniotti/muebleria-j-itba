@@ -2,9 +2,11 @@ import { useState } from 'react';
 import './ContactForm.css';
 
 function ContactForm() {
-  const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
-  const [mensaje, setMensaje] = useState('');
+  const [form, setForm] = useState({ nombre: '', email: '', mensaje: '' });
+
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   return (
     <form className="contact-form">
@@ -16,8 +18,8 @@ function ContactForm() {
           id="nombre"
           name="nombre"
           type="text"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
+          value={form.nombre}
+          onChange={handleChange}
         />
       </div>
 
@@ -27,8 +29,8 @@ function ContactForm() {
           id="email"
           name="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={form.email}
+          onChange={handleChange}
         />
       </div>
 
@@ -37,8 +39,8 @@ function ContactForm() {
         <textarea
           id="mensaje"
           name="mensaje"
-          value={mensaje}
-          onChange={(e) => setMensaje(e.target.value)}
+          value={form.mensaje}
+          onChange={handleChange}
         />
       </div>
 
