@@ -58,7 +58,7 @@ function ContactForm() {
   }
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit}>
+    <form className="contact-form" onSubmit={handleSubmit} noValidate>
       <h2>Contacto</h2>
 
       <div className="contact-form__field">
