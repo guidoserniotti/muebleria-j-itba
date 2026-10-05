@@ -1,23 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './ProductDetail.css';
 
 function ProductDetail({ producto, onVolver, onAgregarAlCarrito }) {
     const [agregado, setAgregado] = useState(false);
 
-    useEffect(() => {
-        if (!agregado) return;
+    const timerRef = useRef(null);
 
-        const timer = setTimeout(() => setAgregado(false), 2000);
-        return () => clearTimeout(timer);
-    }, [agregado]);
+    useEffect(() => () => clearTimeout(timerRef.current), []);
 
     if (!producto) {
         return <p>No hay ningún producto seleccionado.</p>;
     }
 
     const handleAgregar = () => {
-        onAgregarAlCarrito(producto);
+        onAgregarAlCarrito?.(producto);
         setAgregado(true);
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setAgregado(false), 2000);
     };
 
     return (
@@ -49,11 +48,9 @@ function ProductDetail({ producto, onVolver, onAgregarAlCarrito }) {
                         Añadir al carrito
                     </button>
 
-                    {agregado && (
-                        <p className="product-detail__feedback" role="status">
-                            ✓ Producto agregado al carrito
-                        </p>
-                    )}
+                    <p className="product-detail__feedback" role="status">
+                        {agregado && '✓ Producto agregado al carrito'}
+                    </p>
                 </div>
             </div>
         </section>

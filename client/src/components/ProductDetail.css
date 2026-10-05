@@ -23,6 +23,8 @@
     max-width: 100%;
     border-radius: 8px;
     object-fit: cover;
+    aspect-ratio: 4 / 3;
+    align-self: flex-start;
 }
 
 .product-detail__info {
