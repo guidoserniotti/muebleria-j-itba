@@ -18,3 +18,8 @@
     max-width: none;
   }
 }
+
+.product-list__estado {
+  text-align: center;
+  padding: 24px;
+}
