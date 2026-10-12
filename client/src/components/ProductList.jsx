@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ProductCard from "./ProductCard";
 import "./ProductList.css";
 
 const API_URL = "http://localhost:3001/api/productos";
@@ -33,9 +34,11 @@ function ProductList() {
   }
 
   return (
-    <p className="product-list__estado">
-      {productos.length} productos cargados correctamente.
-    </p>
+    <div className="product-list">
+      {productos.map((producto) => (
+        <ProductCard key={producto.id} producto={producto} />
+      ))}
+    </div>
   );
 }
 
