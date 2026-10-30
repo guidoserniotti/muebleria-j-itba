@@ -1,36 +1,19 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import ProductCard from './components/ProductCard';
-import ProductDetail from './components/ProductDetail';
-import ContactForm from './components/ContactForm';
-
-const productos = [
-  {
-    id: 1,
-    nombre: 'Sofá Patagonia',
-    precio: 1250000,
-    imagen: '/img/products/sofa-patagonia.png',
-    descripcion:
-      'Sofá de tres cuerpos tapizado en lino, cómodo y sostenible para el hogar moderno.',
-  },
-];
+import Inicio from './pages/Inicio';
+import Catalogo from './pages/Catalogo';
+import ProductoDetalle from './pages/ProductoDetalle';
+import Contacto from './pages/Contacto';
+import CrearProducto from './pages/CrearProducto';
+import EditarProducto from './pages/EditarProducto';
+import NotFound from './pages/NotFound';
 
 function App() {
-  const [vista, setVista] = useState('listado');
-  const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [carrito, setCarrito] = useState([]);
 
-  const verDetalle = (producto) => {
-    setProductoSeleccionado(producto);
-    setVista('detalle');
-  };
-
-  const volverAlListado = () => {
-    setProductoSeleccionado(null);
-    setVista('listado');
-  };
-
+  // Santi usalo desde el detalle; 
   const agregarAlCarrito = (producto) => {
     setCarrito((carritoActual) => [...carritoActual, producto]);
   };
@@ -39,30 +22,18 @@ function App() {
     <div className="App">
       <Navbar cartCount={carrito.length} />
       <main>
-        {vista === 'listado' && (
-          <section>
-            <h1>Catálogo de productos</h1>
-            <div className="product-list">
-              {productos.map((producto) => (
-                <ProductCard
-                  key={producto.id}
-                  producto={producto}
-                  onClick={() => verDetalle(producto)}
-                />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {vista === 'detalle' && (
-          <ProductDetail
-            producto={productoSeleccionado}
-            onVolver={volverAlListado}
-            onAgregarAlCarrito={agregarAlCarrito}
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/productos" element={<Catalogo />} />
+          <Route
+             path="/productos/:id"
+             element={<ProductoDetalle onAgregarAlCarrito={agregarAlCarrito} />}
           />
-        )}
-
-        {vista === 'contacto' && <ContactForm />}
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/admin/crear-producto" element={<CrearProducto />} />
+          <Route path="/admin/editar-producto/:id" element={<EditarProducto />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
       <Footer />
     </div>
