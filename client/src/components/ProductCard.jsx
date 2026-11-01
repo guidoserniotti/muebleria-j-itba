@@ -1,7 +1,7 @@
 import "./ProductCard.css";
 
 function ProductCard({ producto, onClick }) {
-  const { nombre, precio, imagen } = producto;
+  const { _id, nombre, precio, imagenUrl, imagen } = producto;
 
   return (
     <article
@@ -16,11 +16,11 @@ function ProductCard({ producto, onClick }) {
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
     >
-      <img className="product-card__image" src={imagen} alt={nombre} />
+      <img className="product-card__image" src={imagenUrl || imagen} alt={nombre} />
       <div className="product-card__info">
         <h3 className="product-card__nombre">{nombre}</h3>
         <p className="product-card__precio">
-          ${precio.toLocaleString("es-AR")}
+          ${Number(precio).toLocaleString("es-AR")}
         </p>
       </div>
     </article>
