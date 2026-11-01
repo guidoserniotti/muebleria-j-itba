@@ -1,3 +1,4 @@
+import EditProduct from './components/EditProduct';
 import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -63,6 +64,12 @@ function App() {
         )}
 
         {vista === 'contacto' && <ContactForm />}
+        {vista === 'editar' && (
+  <EditProduct 
+    productoId={productoSeleccionado?.id} 
+    setVista={setVista} 
+  />
+)}
       </main>
       <Footer />
     </div>
