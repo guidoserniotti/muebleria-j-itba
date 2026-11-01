@@ -1,7 +1,14 @@
-.product-card {
+.product-card__link {
+  display: block;
   width: 100%;
   max-width: 350px;
   margin: 0 auto;
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-card {
+  width: 100%;
   background: white;
   border-radius: 12px;
   overflow: hidden;
