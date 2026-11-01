@@ -1,0 +1,14 @@
+### Traer todos los productos
+GET http://localhost:3001/api/productos
+
+### Probar el PUT (Editar producto)
+PUT http://localhost:3001/api/productos/6ae368a332f53903375201e5
+Content-Type: application/json
+
+{
+  "nombre": "Silla de madera actualizada",
+  "precio": 45000
+}
+
+### Probar el DELETE (Eliminar producto)
+DELETE http://localhost:3001/api/productos/6ae368a332f53903375201e5
