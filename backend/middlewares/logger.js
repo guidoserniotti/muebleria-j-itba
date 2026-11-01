@@ -1,7 +1,6 @@
 const logger = (req, res, next) => {
-    const fecha = new Date().toLocaleString('es-AR').replace(',', '');
-    console.log(`[${fecha}] ${req.method} ${req.originalUrl}`);
-    next();
+  console.log(`${req.method} ${req.originalUrl}`);
+  next(); // sin esto el pedido se queda colgado y nunca llega a la ruta
 };
 
-module.exports = logger;
+export default logger;
