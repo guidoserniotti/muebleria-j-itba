@@ -35,4 +35,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const nuevoProducto = await Product.create(req.body);
+    res.status(201).json(nuevoProducto);
+  } catch (error) {
+    if (error.name === "ValidationError") {
+      const errores = Object.values(error.errors).map((e) => e.message);
+      return res.status(400).json({ errores });
+    }
+    console.error("Error al crear el producto:", error.message);
+    res.status(500).json({ error: "Error al crear el producto" });
+  }
+});
+
 export default router;
