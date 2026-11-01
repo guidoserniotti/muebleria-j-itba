@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const logger = require("./middlewares/logger");
+const productosRouter = require("./routes/productos");
 
 const app = express();
 const PORT = 3001;
@@ -9,7 +10,7 @@ app.use(cors());
 app.use(logger);
 app.use(express.json());
 
-// Aquí deben registrarse las rutas de la aplicación.
+app.use("/api/productos", productosRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Ruta no encontrada" });

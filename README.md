@@ -43,13 +43,13 @@ El backend prepara las siguientes rutas de productos:
 
 | Método | Ruta             | Descripción                                   |
 | ------ | ---------------- | --------------------------------------------- |
-| `GET`  | `/productos`     | Devuelve el catálogo completo.                |
-| `GET`  | `/productos/:id` | Devuelve un producto por ID o un error `404`. |
+| `GET`  | `/api/productos`     | Devuelve el catálogo completo.                |
+| `GET`  | `/api/productos/:id` | Devuelve un producto por ID o un error `404`. |
 
-La fuente actual de datos es `backend/data/productos.js`; no hay base de
-datos ni persistencia configurada todavía. La integración de la ruta de
-productos en `backend/server.js` y el renderizado completo desde `App.jsx`
-forman parte del trabajo en curso.
+La fuente de datos es `backend/data/productos.js` (array de objetos en un
+archivo local), tal como pide la consigna; no hay base de datos. El router se
+monta en `backend/server.js` con `app.use("/api/productos", productosRouter)`,
+antes del manejador de 404.
 
 ## Estructura
 
@@ -110,10 +110,21 @@ npm run preview # Sirve la build localmente
 npm run lint    # Ejecuta ESLint
 ```
 
+## Decisiones tomadas
+
+- **Vite en lugar de create-react-app.** El cliente se reconstruyó sobre Vite
+  porque `create-react-app` está discontinuado. La arquitectura de componentes,
+  `useState`, props y el ciclo de vida del `fetch` son idénticos.
+- **Estado global en `App.jsx`.** El carrito, la vista activa y el producto
+  seleccionado viven en `App.jsx` y bajan por props. `Navbar` recibe
+  `cartCount`; `ProductList` recibe `onVerDetalle`.
+- **Renderizado condicional por vista.** `App.jsx` alterna entre listado,
+  detalle y contacto con una variable de estado `vista`.
+- **El fetch vive en `ProductList`.** El componente maneja sus tres estados
+  (carga, error, éxito) y recién entonces mapea con `.map()` usando `id` como
+  key.
+
 ## Alcance actual
 
-El proyecto se encuentra en desarrollo. El carrito, la persistencia de
-productos, el checkout, la autenticación y el envío real del formulario de
-contacto todavía no están conectados a un servicio de backend o base de
-datos. Las ramas de funcionalidades del repositorio documentan la evolución
-del catálogo, la API, el formulario y el detalle de producto.
+El envío del formulario de contacto es solo de cliente: valida y confirma, pero
+no impacta en el backend. No hay persistencia, checkout ni autenticación.
