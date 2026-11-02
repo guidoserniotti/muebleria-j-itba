@@ -1,13 +1,77 @@
-# Mueblería Hermanos Jota
+# Mueblería Hermanos J
 
-E-commerce de muebles con React, Express, MongoDB y Mongoose.
+Proyecto fullstack desarrollado para el curso de ITBA. Hermanos J es una
+mueblería online que presenta un catálogo de muebles para distintos ambientes
+del hogar y ofrece una base para consultar productos, ver su detalle,
+contactar al negocio y gestionar un carrito de compras.
 
-## Requisitos
+## Equipo
 
-- Node.js 22 o superior.
-- Una base MongoDB accesible desde el backend.
+Integrantes identificados a partir de los autores y ramas del repositorio:
 
-## Configuración local
+- Abigail Chamorro
+- Guido Serniotti
+- Julieta Severiche
+- Francisco Mereles
+- Santiago Noguera
+
+## Tecnologías
+
+- **Frontend:** React 19, JavaScript, Vite 8 y CSS.
+- **Backend:** Node.js, Express 5 y CommonJS.
+- **Comunicación:** CORS y API REST en JSON.
+- **Calidad y desarrollo:** ESLint y Nodemon.
+
+## Funcionalidades
+
+- Catálogo de productos organizado por categorías como Living, Comedor,
+  Dormitorio y Oficina.
+- Datos de productos con nombre, precio, descripción, imagen, stock y estado
+  destacado.
+- Tarjetas de producto con imagen y precio localizado para Argentina.
+- Vista de detalle de producto con opción de añadir al carrito y confirmación
+  visual de la acción.
+- Barra de navegación con enlaces a Inicio, Catálogo y Contacto.
+- Formulario de contacto con validación de nombre, email y mensaje, además de
+  estados de error y confirmación de envío.
+- Middleware de logging de solicitudes con fecha, método y URL.
+- Manejo de rutas inexistentes y errores internos en el backend.
+
+## API
+
+El backend prepara las siguientes rutas de productos:
+
+| Método | Ruta             | Descripción                                   |
+| ------ | ---------------- | --------------------------------------------- |
+| `GET`  | `/productos`     | Devuelve el catálogo completo.                |
+| `GET`  | `/productos/:id` | Devuelve un producto por ID o un error `404`. |
+
+La fuente actual de datos es `backend/data/productos.js`; no hay base de
+datos ni persistencia configurada todavía. La integración de la ruta de
+productos en `backend/server.js` y el renderizado completo desde `App.jsx`
+forman parte del trabajo en curso.
+
+## Estructura
+
+```text
+.
+├── backend/
+│   ├── data/productos.js       # Catálogo inicial
+│   ├── middlewares/logger.js   # Registro de solicitudes
+│   ├── routes/productos.js     # Endpoints de productos
+│   └── server.js               # Servidor Express
+└── client/
+		├── public/img/products/    # Imágenes del catálogo
+		└── src/
+				├── components/         # Navbar, footer, tarjetas, detalle y contacto
+				├── styles/             # Estilos globales
+				├── App.jsx             # Composición principal
+				└── main.jsx            # Punto de entrada React
+```
+
+## Instalación y ejecución
+
+Se necesitan Node.js y npm.
 
 ### Backend
 
