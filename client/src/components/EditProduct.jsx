@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config.js';
-// import ProductForm from './ProductForm.jsx'; // Falta que Abby termine y suba este componente
+import ProductForm from './ProductForm.jsx';
 
 export default function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [producto, setProducto] = useState(null);
   const [error, setError] = useState(null);
+  const [guardado, setGuardado] = useState(false);
 
   useEffect(() => {
     const fetchProducto = async () => {
@@ -27,6 +28,9 @@ export default function EditProduct() {
   }, [id]);
 
   const handleUpdate = async (datosActualizados) => {
+    setError(null);
+    setGuardado(false);
+
     try {
       const response = await fetch(`${API_URL}/api/productos/${id}`, {
         method: 'PUT',
@@ -35,26 +39,38 @@ export default function EditProduct() {
       });
 
       if (response.ok) {
-        alert('Producto actualizado correctamente');
-        navigate('/productos');
+        setGuardado(true);
+        setTimeout(() => navigate(`/productos/${id}`), 1200);
       } else {
-        alert('Hubo un problema al actualizar el producto');
+        const cuerpo = await response.json().catch(() => ({}));
+        setError(
+          cuerpo.errores?.join(', ') ||
+          cuerpo.error ||
+          'No se pudo actualizar el producto',
+        );
       }
-    } catch (error) {
-      console.error('Error de conexión:', error);
-      alert('Error de conexión con el servidor');
+    } catch {
+      setError('No se pudo conectar con el servidor');
     }
   };
 
-  if (error) return <p>{error}</p>;
+  if (error && !producto) return <p role="alert">{error}</p>;
   if (!producto) return <p>Cargando datos del producto...</p>;
 
   return (
     <div className="edit-product-container">
       <h2>Editar Producto</h2>
-      {/* <ProductForm initialData={producto} onSubmit={handleUpdate} /> */}
-      <p>Esperando el formulario de Abby para inyectar los datos...</p>
-      
+      {guardado && (
+        <p className="exito" role="status">
+          Producto actualizado correctamente. Redirigiendo...
+        </p>
+      )}
+      {error && <p className="error" role="alert">{error}</p>}
+      <ProductForm
+        initialData={producto}
+        onSubmit={handleUpdate}
+        textoBoton="Actualizar producto"
+      />
       <button onClick={() => navigate('/productos')}>Cancelar y volver</button>
     </div>
   );
