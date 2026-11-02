@@ -1,60 +1,74 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DeleteProductButton from './DeleteProductButton';
 import './ProductDetail.css';
 
 function ProductDetail({ producto, onVolver, onAgregarAlCarrito }) {
-    const [agregado, setAgregado] = useState(false);
+  const [agregado, setAgregado] = useState(false);
+  const navigate = useNavigate();
+  const timerRef = useRef(null);
 
-    const timerRef = useRef(null);
+  useEffect(() => () => clearTimeout(timerRef.current), []);
 
-    useEffect(() => () => clearTimeout(timerRef.current), []);
+  if (!producto) {
+    return <p>No hay ningún producto seleccionado.</p>;
+  }
 
-    if (!producto) {
-        return <p>No hay ningún producto seleccionado.</p>;
-    }
+  const handleAgregar = () => {
+    onAgregarAlCarrito?.(producto);
+    setAgregado(true);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setAgregado(false), 2000);
+  };
 
-    const handleAgregar = () => {
-        onAgregarAlCarrito?.(producto);
-        setAgregado(true);
-        clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => setAgregado(false), 2000);
-    };
+  return (
+    <section className="product-detail">
+      <button className="product-detail__volver" onClick={onVolver}>
+        ← Volver al listado
+      </button>
 
-    return (
-        <section className="product-detail">
-            <button className="product-detail__volver" onClick={onVolver}>
-                ← Volver al listado
+      <div className="product-detail__contenido">
+        <img 
+          className="product-detail__imagen" 
+          src={producto.imagen} 
+          alt={producto.nombre} 
+        />
+
+        <div className="product-detail__info">
+          <h2>{producto.nombre}</h2>
+          <p className="product-detail__descripcion">
+            {producto.descripcion}
+          </p>
+          <p className="product-detail__precio">
+            ${producto.precio}
+          </p>
+          
+          <button 
+            className="product-detail__agregar"
+            onClick={handleAgregar}
+          >
+            Añadir al carrito
+          </button>
+          
+          <p className="product-detail__feedback" role="status">
+            {agregado && '✓ Producto agregado al carrito'}
+          </p>
+
+          {/* Botones de Administración agregados acá usando _id */}
+          <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+            <button 
+              onClick={() => navigate(`/admin/editar-producto/${producto._id}`)}
+              style={{ backgroundColor: '#007bff', color: 'white', padding: '8px 12px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+            >
+              Editar Producto
             </button>
+            <DeleteProductButton productId={producto._id} />
+          </div>
 
-            <div className="product-detail__contenido">
-                <img
-                    className="product-detail__imagen"
-                    src={producto.imagen}
-                    alt={producto.nombre}
-                />
-
-                <div className="product-detail__info">
-                    <h2>{producto.nombre}</h2>
-                    <p className="product-detail__descripcion">
-                        {producto.descripcion}
-                    </p>
-                    <p className="product-detail__precio">
-                        ${producto.precio}
-                    </p>
-
-                    <button
-                        className="product-detail__agregar"
-                        onClick={handleAgregar}
-                    >
-                        Añadir al carrito
-                    </button>
-
-                    <p className="product-detail__feedback" role="status">
-                        {agregado && '✓ Producto agregado al carrito'}
-                    </p>
-                </div>
-            </div>
-        </section>
-    );
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default ProductDetail;
