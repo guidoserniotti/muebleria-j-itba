@@ -1,9 +1,11 @@
+import ContactForm from '../components/ContactForm';
+
 function Contacto() {
-return (
-<section>
-<h2>Contacto</h2>
-<p>Pendiente: Guido</p>
-</section>
-);
+  return (
+    <section>
+      <ContactForm />
+    </section>
+  );
 }
+
 export default Contacto;
