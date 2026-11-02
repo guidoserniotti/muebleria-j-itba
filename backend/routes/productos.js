@@ -1,12 +1,42 @@
 import express from "express";
 import mongoose from "mongoose";
 import Product from "../models/Product.js";
+import Categoria from "../models/Categoria.js";
 
 const router = express.Router();
 
+async function asegurarCategoria(categoria, res) {
+  if (categoria === undefined || categoria === null || categoria === "") {
+    return true;
+  }
+
+  if (!mongoose.isValidObjectId(categoria)) {
+    res.status(400).json({ error: "Id de categoría inválido" });
+    return false;
+  }
+
+  const existe = await Categoria.findById(categoria);
+  if (!existe) {
+    res.status(400).json({ error: "La categoría no existe" });
+    return false;
+  }
+
+  return true;
+}
+
 router.get("/", async (req, res) => {
   try {
-    const productos = await Product.find();
+    const filtro = {};
+    const { categoria } = req.query;
+
+    if (categoria) {
+      if (!mongoose.isValidObjectId(categoria)) {
+        return res.status(400).json({ error: "Id de categoría inválido" });
+      }
+      filtro.categoria = categoria;
+    }
+
+    const productos = await Product.find(filtro).populate("categoria", "nombre");
     res.status(200).json(productos);
   } catch (error) {
     console.error("Error al obtener los productos:", error.message);
@@ -22,7 +52,7 @@ router.get("/:id", async (req, res) => {
   }
 
   try {
-    const producto = await Product.findById(id);
+    const producto = await Product.findById(id).populate("categoria", "nombre");
 
     if (!producto) {
       return res.status(404).json({ error: "Producto no encontrado" });
@@ -36,6 +66,10 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+  if (!(await asegurarCategoria(req.body.categoria, res))) {
+    return;
+  }
+
   try {
     const nuevoProducto = await Product.create(req.body);
     res.status(201).json(nuevoProducto);
@@ -58,13 +92,17 @@ router.put('/:id', async (req, res) => {
     return res.status(400).json({ error: "ID de producto inválido" });
   }
 
+  if (!(await asegurarCategoria(req.body.categoria, res))) {
+    return;
+  }
+
   try {
     const productoActualizado = await Product.findByIdAndUpdate(
-      id, 
-      req.body, 
-      { 
-        new: true, 
-        runValidators: true 
+      id,
+      req.body,
+      {
+        returnDocument: "after",
+        runValidators: true,
       }
     );
 
