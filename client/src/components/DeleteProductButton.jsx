@@ -15,10 +15,26 @@ export default function DeleteProductButton({ productId }) {
 
       if (response.ok) {
         alert("Producto eliminado correctamente.");
-        navigate('/productos'); 
-      } else {
-        alert("Hubo un problema al intentar eliminar el producto.");
+        navigate('/productos');
+        return;
       }
+
+      if (response.status === 404) {
+        alert("El producto ya no existe.");
+        navigate('/productos');
+        return;
+      }
+
+      let mensaje = "Hubo un problema al intentar eliminar el producto.";
+      try {
+        const respuesta = await response.json();
+        if (respuesta.error) {
+          mensaje = respuesta.error;
+        }
+      } catch {
+        // Mantener el mensaje genérico si el backend no devuelve JSON.
+      }
+      alert(mensaje);
     } catch (error) {
       console.error("Error de conexión:", error);
       alert("Error de conexión con el servidor.");
