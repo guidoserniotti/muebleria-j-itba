@@ -7,7 +7,7 @@ import Catalogo from './pages/Catalogo';
 import ProductoDetalle from './pages/ProductoDetalle';
 import Contacto from './pages/Contacto';
 import CrearProducto from './pages/CrearProducto';
-import EditarProducto from './pages/EditarProducto';
+import EditProduct from './components/EditProduct';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
           />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/admin/crear-producto" element={<CrearProducto />} />
-          <Route path="/admin/editar-producto/:id" element={<EditarProducto />} />
+          <Route path="/admin/editar-producto/:id" element={<EditProduct />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
