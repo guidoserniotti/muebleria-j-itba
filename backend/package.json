@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"No hay tests en el backend todavia\" && exit 0",
+    "test": "node --test tests/contrato.test.js",
     "start": "node server.js",
     "dev": "node --env-file=.env --watch server.js",
     "seed": "node --env-file=.env seed.js"

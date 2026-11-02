@@ -19,6 +19,10 @@ const productSchema = new mongoose.Schema(
       min: [0, "El stock no puede ser negativo"],
     },
     imagenUrl: { type: String },
+    categoria: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Categoria",
+    },
   },
   { timestamps: true },
 );
