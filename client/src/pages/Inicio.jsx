@@ -1,5 +1,4 @@
 import ProductCard from '../components/ProductCard';
-import heroImage from '../assets/hero.png';
 import { useProducts } from '../hooks/useProducts';
 
 function Inicio() {
@@ -10,12 +9,9 @@ function Inicio() {
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-content">
-          <img src={heroImage} alt="Muebles de Hermanos Jota" />
-          <h1>Muebles con identidad</h1>
-          <p>Diseño, calidad y calidez para cada espacio de tu hogar.</p>
-        </div>
+      <section className="inicio-heading">
+        <h1>Muebles con identidad</h1>
+        <p>Diseño, calidad y calidez para cada espacio de tu hogar.</p>
       </section>
       <section className="destacados">
         <h2>Productos destacados</h2>
