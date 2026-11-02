@@ -53,6 +53,11 @@ router.post("/", async (req, res) => {
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
 
+  // Validación requerida por Guido
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ error: "ID de producto inválido" });
+  }
+
   try {
     const productoActualizado = await Product.findByIdAndUpdate(
       id, 
@@ -80,6 +85,11 @@ router.put('/:id', async (req, res) => {
 // DELETE para eliminar un producto
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
+
+  // Validación requerida por Guido
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ error: "ID de producto inválido" });
+  }
 
   try {
     const productoEliminado = await Product.findByIdAndDelete(id);
