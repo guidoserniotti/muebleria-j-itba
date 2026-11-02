@@ -58,7 +58,7 @@ export default function EditProduct() {
   if (!producto) return <p>Cargando datos del producto...</p>;
 
   return (
-    <div className="edit-product-container">
+    <div className="product-form-page">
       <h2>Editar Producto</h2>
       {guardado && (
         <p className="exito" role="status">
@@ -71,7 +71,9 @@ export default function EditProduct() {
         onSubmit={handleUpdate}
         textoBoton="Actualizar producto"
       />
-      <button onClick={() => navigate('/productos')}>Cancelar y volver</button>
+      <button className="product-form-page__cancel" onClick={() => navigate('/productos')}>
+        Cancelar y volver
+      </button>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './ProductForm.css';
 
 const VACIO = {
   nombre: '',
@@ -42,36 +43,55 @@ function ProductForm({ initialData = VACIO, onSubmit, textoBoton = 'Guardar prod
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <label>
+    <form className="product-form" onSubmit={handleSubmit} noValidate>
+      <label className="product-form__field">
         Nombre
-        <input name="nombre" value={datos.nombre} onChange={handleChange} />
+        <input
+          name="nombre"
+          value={datos.nombre}
+          onChange={handleChange}
+          aria-invalid={Boolean(errores.nombre)}
+        />
+        {errores.nombre && <span className="product-form__error">{errores.nombre}</span>}
       </label>
-      {errores.nombre && <p className="error">{errores.nombre}</p>}
 
-      <label>
+      <label className="product-form__field">
         Descripción
         <textarea name="descripcion" value={datos.descripcion} onChange={handleChange} />
       </label>
 
-      <label>
+      <label className="product-form__field">
         Precio
-        <input name="precio" type="number" min="0" value={datos.precio} onChange={handleChange} />
+        <input
+          name="precio"
+          type="number"
+          min="0"
+          value={datos.precio}
+          onChange={handleChange}
+          aria-invalid={Boolean(errores.precio)}
+        />
+        {errores.precio && <span className="product-form__error">{errores.precio}</span>}
       </label>
-      {errores.precio && <p className="error">{errores.precio}</p>}
 
-      <label>
+      <label className="product-form__field">
         Stock
-        <input name="stock" type="number" min="0" value={datos.stock} onChange={handleChange} />
+        <input
+          name="stock"
+          type="number"
+          min="0"
+          value={datos.stock}
+          onChange={handleChange}
+          aria-invalid={Boolean(errores.stock)}
+        />
+        {errores.stock && <span className="product-form__error">{errores.stock}</span>}
       </label>
-      {errores.stock && <p className="error">{errores.stock}</p>}
 
-      <label>
+      <label className="product-form__field">
         URL de la imagen
         <input name="imagenUrl" value={datos.imagenUrl} onChange={handleChange} />
       </label>
 
-      <button type="submit" disabled={enviando}>
+      <button className="product-form__submit" type="submit" disabled={enviando}>
         {enviando ? 'Guardando...' : textoBoton}
       </button>
     </form>

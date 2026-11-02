@@ -31,7 +31,7 @@ function CrearProducto() {
   };
 
   return (
-    <main>
+    <main className="product-form-page">
       <h1>Crear producto</h1>
 
       {exito && <p className="exito" role="status">Producto creado con éxito. Redirigiendo...</p>}
