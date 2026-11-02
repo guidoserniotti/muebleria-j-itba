@@ -367,3 +367,7 @@ footer p { text-align: center; }
   letter-spacing: 0.08em;
   white-space: nowrap;
 }
+header nav a.active {
+text-decoration: underline;
+text-underline-offset: 6px;
+}

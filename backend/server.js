@@ -1,74 +1,33 @@
-import express from "express";
-import cors from "cors";
-import logger from "./middlewares/logger.js";
-import Producto from "./models/Product.js";
-import mongoose from "mongoose";
-import "dotenv/config";
+import express from 'express';
+import cors from 'cors';
+import logger from './middlewares/logger.js';
+import connectDB from './db.js';
+import productosRouter from './routes/productos.js';
 
 const app = express();
-const PORT = 3001;
-mongoose.connect(process.env.MONGO_URI, { dbName: "muebleriaJotaDB" })
-  .then(() => console.log("¡Conectado a MongoDB Atlas!"))
-  .catch(err => console.error("Error conectando a Mongo:", err));
+const PORT = process.env.PORT || 3001;
 
+// Middlewares globales
 app.use(cors());
 app.use(logger);
 app.use(express.json());
 
-// Aquí deben registrarse las rutas de la aplicación.
-// (PUT) Editar un producto existente
-app.put("/api/productos/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const datosNuevos = req.body;
-    
-    // El { new: true } devuelve el objeto ya actualizado
-    const productoActualizado = await Producto.findByIdAndUpdate(id, datosNuevos, { new: true });
-    
-    if (!productoActualizado) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-    
-    res.json(productoActualizado);
-  } catch (error) {
-    next(error); // Deriva el error al middleware de la línea 18
-  }
-});
+// Rutas de la API
+app.use('/api/productos', productosRouter);
 
-// (GET) Traer todos los productos
-app.get("/api/productos", async (req, res, next) => {
-  try {
-    const productos = await Producto.find();
-    res.json(productos);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// (DELETE) Eliminar un producto
-app.delete("/api/productos/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const productoEliminado = await Producto.findByIdAndDelete(id);
-    
-    if (!productoEliminado) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-    
-    res.json({ mensaje: "Producto eliminado correctamente" });
-  } catch (error) {
-    next(error);
-  }
-});
-
+// Ruta no encontrada (404)
 app.use((req, res, next) => {
-  res.status(404).json({ error: "Ruta no encontrada" });
+  res.status(404).json({ error: 'Ruta no encontrada' });
 });
 
+// Manejador de errores centralizado
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: "Error interno del servidor" });
+  res.status(500).json({ error: 'Error interno del servidor' });
 });
+
+// Primero se conecta a la base y recién después se acepta tráfico
+await connectDB();
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
