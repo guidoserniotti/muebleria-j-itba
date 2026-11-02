@@ -1,21 +1,21 @@
+import { useNavigate } from 'react-router-dom';
 import { API_URL } from '../config.js';
 
-export default function DeleteProductButton({ productId, setVista }) {
+export default function DeleteProductButton({ productId }) {
+  const navigate = useNavigate();
+
   const handleDelete = async () => {
-    // 1. Alerta de confirmación del navegador
     const confirmar = window.confirm("¿Estás seguro de que querés eliminar este producto? Esta acción no se puede deshacer.");
     if (!confirmar) return;
 
     try {
-      // 2. Ejecutar el DELETE a tu backend
       const response = await fetch(`${API_URL}/api/productos/${productId}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         alert("Producto eliminado correctamente.");
-        // 3. Redirección al catálogo
-        setVista('listado'); 
+        navigate('/productos'); 
       } else {
         alert("Hubo un problema al intentar eliminar el producto.");
       }

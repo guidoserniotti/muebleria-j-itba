@@ -1,32 +1,34 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { API_URL } from '../config.js';
 // import ProductForm from './ProductForm.jsx'; // Falta que Abby termine y suba este componente
 
-export default function EditProduct({ productoId, setVista }) {
+export default function EditProduct() {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [producto, setProducto] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProducto = async () => {
       try {
-        // Usamos productoId que viene por prop
-        const response = await fetch(`${API_URL}/api/productos/${productoId}`);
+        const response = await fetch(`${API_URL}/api/productos/${id}`);
         if (!response.ok) throw new Error('Error al cargar el producto');
         const data = await response.json();
-        setProducto(data); // Guarda los datos en el estado para precargarlos
+        setProducto(data);
       } catch (err) {
         setError(err.message);
       }
     };
     
-    if (productoId) {
+    if (id) {
       fetchProducto();
     }
-  }, [productoId]);
+  }, [id]);
 
   const handleUpdate = async (datosActualizados) => {
     try {
-      const response = await fetch(`${API_URL}/api/productos/${productoId}`, {
+      const response = await fetch(`${API_URL}/api/productos/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(datosActualizados),
@@ -34,7 +36,7 @@ export default function EditProduct({ productoId, setVista }) {
 
       if (response.ok) {
         alert('Producto actualizado correctamente');
-        setVista('listado'); // Vuelve al catálogo cambiando el estado
+        navigate('/productos');
       } else {
         alert('Hubo un problema al actualizar el producto');
       }
@@ -53,8 +55,7 @@ export default function EditProduct({ productoId, setVista }) {
       {/* <ProductForm initialData={producto} onSubmit={handleUpdate} /> */}
       <p>Esperando el formulario de Abby para inyectar los datos...</p>
       
-      {/* Botón temporal para poder volver atrás mientras probás */}
-      <button onClick={() => setVista('listado')}>Cancelar y volver</button>
+      <button onClick={() => navigate('/productos')}>Cancelar y volver</button>
     </div>
   );
 }

@@ -49,4 +49,49 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PUT para actualizar un producto
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const productoActualizado = await Product.findByIdAndUpdate(
+      id, 
+      req.body, 
+      { 
+        new: true, 
+        runValidators: true 
+      }
+    );
+
+    if (!productoActualizado) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+    res.status(200).json(productoActualizado);
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const errores = Object.values(error.errors).map(e => e.message);
+      return res.status(400).json({ errores });
+    }
+    console.error("Error al actualizar el producto:", error.message);
+    res.status(500).json({ error: "Error al actualizar el producto" });
+  }
+});
+
+// DELETE para eliminar un producto
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const productoEliminado = await Product.findByIdAndDelete(id);
+
+    if (!productoEliminado) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+    res.status(200).json({ mensaje: "Producto eliminado correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar el producto:", error.message);
+    res.status(500).json({ error: "Error al eliminar el producto" });
+  }
+});
+
 export default router;
