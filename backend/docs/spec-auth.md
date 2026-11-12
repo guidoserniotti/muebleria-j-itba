@@ -28,12 +28,12 @@ El secreto **nunca** va escrito en el código.
 
 Archivo `models/Usuario.js`. El modelo se llama `Usuario` (la colección queda `usuarios`).
 
-| Campo | Tipo | Reglas |
-|---|---|---|
-| `nombre` | String | obligatorio |
-| `email` | String | obligatorio, **único**, se guarda en **minúsculas** y sin espacios |
-| `password` | String | obligatorio. Guarda el **hash**, nunca el texto plano |
-| `rol` | String | `'cliente'` o `'admin'`. Por defecto `'cliente'` |
+| Campo      | Tipo   | Reglas                                                             |
+| ---------- | ------ | ------------------------------------------------------------------ |
+| `nombre`   | String | obligatorio                                                        |
+| `email`    | String | obligatorio, **único**, se guarda en **minúsculas** y sin espacios |
+| `password` | String | obligatorio. Guarda el **hash**, nunca el texto plano              |
+| `rol`      | String | `'cliente'` o `'admin'`. Por defecto `'cliente'`                   |
 
 Con `timestamps: true`.
 
@@ -41,14 +41,14 @@ Con `timestamps: true`.
 
 Todas las respuestas son JSON. Los errores usan el mismo formato que ya usa su proyecto (en la Mueblería de clase: `{ "mensaje": "..." }`).
 
-| Método y ruta | Acceso | Éxito | Errores |
-|---|---|---|---|
-| `POST /api/usuarios/registro` | público | **201** con `{ _id, nombre, email, rol }` | **400** si falta nombre, email o password · **409** si el email ya existe |
-| `POST /api/usuarios/login` | público | **200** con `{ token, usuario: { _id, nombre, email, rol } }` | **400** si falta email o password · **401** si las credenciales no coinciden |
-| `GET /api/usuarios/perfil` | con token | **200** con `{ _id, nombre, email, rol }` | **401** sin token, con token mal formado, inválido o vencido |
-| `POST /api/productos` | admin | lo que ya tenían (201) | **401** sin token · **403** con token de cliente |
-| `PUT /api/productos/:id` | admin | lo que ya tenían | **401** · **403** |
-| `DELETE /api/productos/:id` | admin | lo que ya tenían | **401** · **403** |
+| Método y ruta                 | Acceso    | Éxito                                                         | Errores                                                                      |
+| ----------------------------- | --------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `POST /api/usuarios/registro` | público   | **201** con `{ _id, nombre, email, rol }`                     | **400** si falta nombre, email o password · **409** si el email ya existe    |
+| `POST /api/usuarios/login`    | público   | **200** con `{ token, usuario: { _id, nombre, email, rol } }` | **400** si falta email o password · **401** si las credenciales no coinciden |
+| `GET /api/usuarios/perfil`    | con token | **200** con `{ _id, nombre, email, rol }`                     | **401** sin token, con token mal formado, inválido o vencido                 |
+| `POST /api/productos`         | admin     | lo que ya tenían (201)                                        | **401** sin token · **403** con token de cliente                             |
+| `PUT /api/productos/:id`      | admin     | lo que ya tenían                                              | **401** · **403**                                                            |
+| `DELETE /api/productos/:id`   | admin     | lo que ya tenían                                              | **401** · **403**                                                            |
 
 Los `GET` de productos siguen **públicos**.
 
@@ -67,18 +67,22 @@ Los `GET` de productos siguen **públicos**.
 Una fase por pedido al agente. Después de cada fase: leer el diff, aceptar y correr `npm run test:auth`.
 
 ### Fase 1: modelo y registro
+
 `models/Usuario.js` y `POST /api/usuarios/registro` en `routes/usuarios.js`, montado en `/api/usuarios`.
 **Al terminar pasan las pruebas 1 a 4.**
 
 ### Fase 2: login y token
+
 `POST /api/usuarios/login` con `bcrypt.compare` y `jwt.sign`.
 **Al terminar pasan las pruebas 1 a 6.**
 
 ### Fase 3: middleware y ruta protegida
+
 `middleware/auth.js` con `verificarToken`: lee el header, verifica el token, guarda el payload en `req.usuario` y llama a `next()`. Ruta `GET /api/usuarios/perfil` protegida con ese middleware.
 **Al terminar pasan las pruebas 1 a 9.**
 
 ### Fase 4: roles
+
 En el mismo `middleware/auth.js`, `soloAdmin`: si `req.usuario.rol` es `'admin'`, `next()`; si no, 403. Encadenar `verificarToken, soloAdmin` en `POST`, `PUT` y `DELETE` de productos.
 **Al terminar pasan las 12.**
 
