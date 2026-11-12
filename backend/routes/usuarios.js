@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Usuario from "../models/Usuario.js";
+import { verificarToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -60,6 +61,21 @@ router.post("/login", async (req, res) => {
       email: usuario.email,
       rol: usuario.rol,
     },
+  });
+});
+
+router.get("/perfil", verificarToken, async (req, res) => {
+  const usuario = await Usuario.findById(req.usuario.id);
+
+  if (!usuario) {
+    return res.status(404).json({ error: "Usuario no encontrado" });
+  }
+
+  res.status(200).json({
+    _id: usuario._id,
+    nombre: usuario.nombre,
+    email: usuario.email,
+    rol: usuario.rol,
   });
 });
 
