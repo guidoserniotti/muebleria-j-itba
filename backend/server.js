@@ -4,6 +4,7 @@ import logger from './middlewares/logger.js';
 import connectDB from './db.js';
 import productosRouter from './routes/productos.js';
 import categoriasRouter from './routes/categorias.js';
+import usuariosRouter from './routes/usuarios.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,6 +17,7 @@ app.use(express.json());
 // Rutas de la API
 app.use('/api/productos', productosRouter);
 app.use('/api/categorias', categoriasRouter);
+app.use('/api/usuarios', usuariosRouter);
 
 // Ruta no encontrada (404)
 app.use((req, res, next) => {
