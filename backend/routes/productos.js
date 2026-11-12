@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import Product from "../models/Product.js";
 import Categoria from "../models/Categoria.js";
+import { verificarToken, soloAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -65,7 +66,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", verificarToken, soloAdmin, async (req, res) => {
   if (!(await asegurarCategoria(req.body.categoria, res))) {
     return;
   }
@@ -84,7 +85,7 @@ router.post("/", async (req, res) => {
 });
 
 // PUT para actualizar un producto
-router.put('/:id', async (req, res) => {
+router.put('/:id', verificarToken, soloAdmin, async (req, res) => {
   const { id } = req.params;
 
   // Validación requerida por Guido
@@ -121,7 +122,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE para eliminar un producto
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verificarToken, soloAdmin, async (req, res) => {
   const { id } = req.params;
 
   // Validación requerida por Guido
